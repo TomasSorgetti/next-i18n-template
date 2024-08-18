@@ -3,6 +3,8 @@ import { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { LocaleProvider } from "@/providers/LocaleProvider";
+import { StoreProvider } from "@/providers/StoreProvider";
+
 export const metadata: Metadata = {
   title: "Nextjs Template i18n - redux - sass",
   description: "Template with Next.js, i18n, redux and sass",
@@ -20,15 +22,17 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          <LocaleProvider>
-            <Navbar />
-            {children}
-          </LocaleProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang={locale}>
+        <body>
+          <NextIntlClientProvider messages={messages}>
+            <LocaleProvider>
+              <Navbar />
+              {children}
+            </LocaleProvider>
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }
